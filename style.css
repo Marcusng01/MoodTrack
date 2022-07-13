@@ -1,0 +1,115 @@
+:root{
+    --light-coral: #ff7476b9;
+    --pastel-pink: #f5aaad;
+    --shallow-taupe: #f1d4d4;
+    --powder-blue: #b5d6d6;
+    --celeste: #9CF6F6;
+}
+
+*{
+    font-family: 'Lato', sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    background-color: var(--powder-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container{
+    height:57.2rem;
+    width: 42rem;
+    background-color: var(--shallow-taupe);
+    box-shadow: 0.5rem 0.5rem 0.5rem #98b4b4;
+}
+
+.header{
+    box-sizing: border-box;
+    width: 100%;
+    height: 12rem;
+    background-color: var(--light-coral);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    font-size: 200%;
+}
+
+.days{
+    width: 100%;
+    height: 2rem;
+    display: flex;
+    justify-content: space-around;
+    line-height: 2rem ;
+}
+
+.days div{
+    width: calc(100%/7);
+    height:100%;
+    text-align: center;
+    line-height: calc(2);
+}
+
+.dates{
+    width: 100%;
+    height: 43.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: start;
+}
+
+.dates div{
+    width: calc(100%/7);
+    height: calc(100%/6);
+    text-align: center;
+    line-height: calc(43.2rem/6);
+}
+
+.dates div:hover{
+    transition: background-color 0.3s;
+    background-color: #cfb6b6;
+}
+
+.legend{
+    height: 12rem;
+    width: 4.75rem;
+    margin: 5rem;
+    background-color: var(--celeste);
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    box-shadow: 0.5rem 0.5rem 0.5rem #98b4b4;
+}
+
+.legend div{
+    width: 100%;
+    line-height: 2rem;
+}
+
+.great{
+    background-color: purple;
+}
+
+#good{
+    background-color: blue;
+}
+
+#average{
+    background-color:yellow;
+}
+#bad{
+    background-color: red;
+}
+
+#awful{
+    background-color:  rgb(36, 36, 36);
+}
+
+#forgor{
+    background-color: grey;
+}
