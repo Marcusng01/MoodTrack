@@ -4,6 +4,12 @@
     --shallow-taupe: #f1d4d4;
     --powder-blue: #b5d6d6;
     --celeste: #9CF6F6;
+    --great:#b809cf;
+    --good:#5673f8;
+    --average: #fdd74b;
+    --bad: #fd4264;
+    --awful: #3a3a44;
+    --forgor: #ecdddd;
 }
 
 *{
@@ -92,24 +98,35 @@ body{
 }
 
 .great{
-    background-color: purple;
+    background-color: var(--great)
 }
 
-#good{
-    background-color: blue;
+.great div:hover{
+
 }
 
-#average{
-    background-color:yellow;
-}
-#bad{
-    background-color: red;
+.legend{
+    color: white;
 }
 
-#awful{
-    background-color:  rgb(36, 36, 36);
+.good{
+    background-color: var(--good);
 }
 
-#forgor{
-    background-color: grey;
+.average{
+    background-color:var(--average);
+    color: black;
+}
+
+.bad{
+    background-color: var(--bad);
+}
+
+.awful{
+    background-color:  var(--awful);
+}
+
+.forgor{
+    background-color: var(--forgor);
+    color: black;
 }
