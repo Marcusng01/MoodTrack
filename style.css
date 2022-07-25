@@ -1,15 +1,13 @@
 :root{
-    --light-coral: #ff7476b9;
-    --pastel-pink: #f5aaad;
-    --shallow-taupe: #f1d4d4;
-    --powder-blue: #b5d6d6;
-    --celeste: #9CF6F6;
-    --great:#b809cf;
-    --good:#5673f8;
-    --average: #fdd74b;
-    --bad: #fd4264;
-    --awful: #3a3a44;
-    --forgor: #ecdddd;
+    --light-coral: rgb(255, 117, 119);
+    --shallow-taupe: rgb(241, 212, 212);
+    --powder-blue: rgb(181, 214, 214);
+    --great:rgb(184, 9, 207);
+    --good:rgb(86, 115, 248);
+    --average: rgb(253, 215, 75);
+    --bad: rgb(253, 66, 100);
+    --awful: rgb(58, 58, 68);
+    --forgor: rgb(212, 212, 212);
 }
 
 *{
@@ -74,6 +72,7 @@ body{
     height: calc(100%/6);
     text-align: center;
     line-height: calc(43.2rem/6);
+    background-color: var(--shallow-taupe);
 }
 
 .dates div:hover{
@@ -85,7 +84,6 @@ body{
     height: 12rem;
     width: 4.75rem;
     margin: 5rem;
-    background-color: var(--celeste);
     display: flex;
     flex-wrap: wrap;
     text-align: center;
