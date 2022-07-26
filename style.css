@@ -90,7 +90,7 @@ body{
 .legend{
     height: 12rem;
     width: 4.75rem;
-    margin: 5rem;
+    margin-left: 3rem;
     display: flex;
     flex-wrap: wrap;
     text-align: center;
