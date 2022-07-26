@@ -1,19 +1,20 @@
 :root{
-    --light-coral: rgb(255, 117, 119);
-    --shallow-taupe: rgb(241, 212, 212);
-    --powder-blue: rgb(181, 214, 214);
-    --great:rgb(184, 9, 207);
-    --good:rgb(86, 115, 248);
-    --average: rgb(253, 215, 75);
-    --bad: rgb(253, 66, 100);
-    --awful: rgb(58, 58, 68);
-    --forgor: rgb(212, 212, 212);
+    --light-coral: rgba(255, 117, 119,1);
+    --shallow-taupe: rgba(241, 212, 212,1);
+    --powder-blue: rgba(181, 214, 214,1);
+    --great:rgba(184, 9, 207,1);
+    --good:rgba(86, 115, 248,1);
+    --average:rgba(253, 215, 75,1);
+    --bad: rgba(253, 66, 100,1);
+    --awful:rgba(58, 58, 68,1);
+    --forgor: rgba(212, 212, 212,1);
 }
 
 *{
     font-family: 'Lato', sans-serif;
     padding: 0;
     margin: 0;
+    user-select: none;
 }
 
 body{
@@ -41,6 +42,11 @@ body{
     text-align: center;
     padding: 2rem;
     font-size: 200%;
+}
+
+.header span{
+    user-select: none;
+    cursor:pointer;
 }
 
 .days{
@@ -73,11 +79,12 @@ body{
     text-align: center;
     line-height: calc(43.2rem/6);
     background-color: var(--shallow-taupe);
+    transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 
 .dates div:hover{
-    transition: background-color 0.3s;
-    background-color: #cfb6b6;
+    opacity: 0.7;
+    cursor: pointer;
 }
 
 .legend{
@@ -99,9 +106,6 @@ body{
     background-color: var(--great)
 }
 
-.great div:hover{
-
-}
 
 .legend{
     color: white;
