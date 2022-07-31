@@ -8,6 +8,7 @@
     --bad: rgba(253, 66, 100,1);
     --awful:rgba(58, 58, 68,1);
     --forgor: rgba(212, 212, 212,1);
+    --straw: rgba(219, 208, 83,1);
 }
 
 *{
@@ -19,7 +20,7 @@
 
 body{
     background-color: var(--powder-blue);
-    display: flex;
+    display:flex;
     align-items: center;
     justify-content: center;
 }
@@ -78,8 +79,7 @@ body{
     height: calc(100%/6);
     text-align: center;
     line-height: calc(43.2rem/6);
-    background-color: var(--shallow-taupe);
-    transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    transition: background-color 0.2s, opacity 0.2s ease-in-out;
 }
 
 .dates div:hover{
@@ -87,12 +87,14 @@ body{
     cursor: pointer;
 }
 
+.dates div:hover .notes{
+    background-color: black;
+}
+
 .legend{
     height: 12rem;
-    width: 4.75rem;
-    margin-left: 3rem;
-    display: flex;
-    flex-wrap: wrap;
+    width: 4.75rem;   
+    margin-left: 3rem; 
     text-align: center;
     box-shadow: 0.5rem 0.5rem 0.5rem #98b4b4;
 }
@@ -131,4 +133,31 @@ body{
 .forgor{
     background-color: var(--forgor);
     color: black;
+}
+
+.notes{
+    margin-left: 3rem;
+    height: 20rem;
+    width: 20rem;
+    background-color: var(--straw);
+    font-size: 100%;
+    font-family: 'Lato', sans-serif;
+    padding: 1rem;
+    box-sizing: border-box;
+
+}
+
+.graph{
+    margin-right: 5rem;
+    height: 40rem;
+    width: 30rem;
+    background-color: pink;
+    display: none;
+}
+
+.pie{
+    height: 20rem;
+    width: 20rem;
+    background-color: red;
+    border-radius: 100%;
 }

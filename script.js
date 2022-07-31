@@ -139,6 +139,35 @@ function moodTrack(){
 }
 moodTrack();
 
+/*
+add event to dates div 
+the event will cause the .notes to open on hover
+the event will also cause the value of .notes to be 
+scrap this */
+
+/*IMPORTANT
+change left click on div dates -> reveals a clickable legend and a textarea
+  make a function that gives event listeners to the legend
+  this function should use the div date in question as parameter
+change right cick on div dates -> sets the background color to default color
+*/
+
+/*
+function notes(){
+  var div = document.querySelector(".dates").querySelectorAll("div");
+  var notes = document.querySelector(".notes");
+  var i;
+  for(i=0;i<42;i++)
+  {
+    div[i].addEventListener("mouseover", e=>{
+    })
+    div[i].addEventListener("mouseleave", e=>{
+    })
+}
+}
+notes();
+*/
+
 const headerArrows = header.querySelectorAll("span");
 headerArrows[0].addEventListener("click", e=>{
   if (monthIndex > 0)
@@ -175,5 +204,4 @@ headerArrows[1].addEventListener("click", e=>{
   greyDatesBack(monthIndex,year);
   moodTrack();
 })
-
 
