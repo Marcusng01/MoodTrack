@@ -20,6 +20,7 @@ headerYear.textContent = year;
 
 const dates = document.querySelector(".dates");
 const save = document.getElementById("save");
+save.style.display = "none";
 const error = document.getElementById("error");
 const legend = document.querySelector(".legend");
 const notes = document.querySelector(".notes");
