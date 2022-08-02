@@ -19,6 +19,11 @@ const headerYear = header.querySelector("h5");
 headerYear.textContent = year;
 
 const dates = document.querySelector(".dates");
+const save = document.getElementById("save");
+const error = document.getElementById("error");
+const legend = document.querySelector(".legend");
+const notes = document.querySelector(".notes");
+const defaultNote = "Write Something Here"
 
 function greyDatesFront(month,year){
   const tempDate = new Date();
@@ -35,6 +40,7 @@ function greyDatesFront(month,year){
     var div = document.createElement("div");
     div.innerText = i;
     div.style.color = "grey";
+    div.classList.add("default");
     dates.append(div);
   }
 }
@@ -48,7 +54,6 @@ function currentDatesMiddle(month,year){
     tempDate.setMonth(month+1);
   }
   else{
-    tempDate.setFullYear(year)
     tempDate.setMonth(0);
   }
   tempDate.setDate(0);
@@ -56,16 +61,15 @@ function currentDatesMiddle(month,year){
   var i;
   for ( i= 1  ; i<= lastDate ; i++){
     var div = document.createElement("div");
+    div.setAttribute("id",i);
     div.innerHTML = i;
     var dateKey = i.toString()+monthIndex+year;
-    savedBackgroundColor = localStorage.getItem(dateKey);
-    if(savedBackgroundColor==null)
-      div.style.backgroundColor = colors[0];
+    var savedStatus = localStorage.getItem(dateKey);
+    if(savedStatus!=null)
+      div.classList.add(savedStatus);
     else
-      div.style.backgroundColor = colors[localStorage.getItem(dateKey)];
-    console.log(div);
+      div.classList.add("default");
     dates.append(div);
-    
   }
 }
 currentDatesMiddle(monthIndex,year);
@@ -83,7 +87,6 @@ function greyDatesBack(month,year){
     tempDate.setMonth(month+1);
   }
   else{
-    tempDate.setFullYear(year)
     tempDate.setMonth(0);
   }
   tempDate.setDate(0);
@@ -95,113 +98,168 @@ function greyDatesBack(month,year){
     div.innerText = i;
     div.style.color = "grey";
     dates.append(div);
+    div.classList.add("default");
   }
 }
 greyDatesBack(monthIndex,year);
 
+function legendTrack(){
+  var i;
+  var legendDiv = legend.querySelectorAll("div");
+  
+  for(i=0;i<6;i++){
+    legendDiv[i].addEventListener("click", e=>{
+      var lastDiv = sessionStorage.getItem("lastClicked");
+      if(sessionStorage.getItem("lastClicked") != null ){
+        var div = document.getElementById(lastDiv.toString());
+        div.style.backgroundColor = null;
+        var dateKey = div.textContent+monthIndex+year;
+        var currStatus = e.target.textContent.toLowerCase();
+        var dateStatus = localStorage.getItem(dateKey);
+        if(dateStatus!=null)
+        {
+          div.classList.remove(dateStatus);
+          localStorage.removeItem(dateKey);
+        }
+        div.classList.add(currStatus);
+        localStorage.setItem(dateKey,currStatus);
+        save.innerHTML = "Save";
+      }
+    })
+  }
+  legendDiv[i].addEventListener("click",e=>{
+    var div = document.getElementById(sessionStorage.getItem("lastClicked").toString());
+    div.style.opacity = null;
+    sessionStorage.removeItem("lastClicked");
+    save.style.display ="none";
+    error.style.display = "none";
+    legend.style.cursor = null;
+
+    notes.style.display = "none";
+    var dateKeyNote = div.textContent+monthIndex+year+"n";
+    if (notes.value != defaultNote){
+      if(notes.value == "")
+        localStorage.removeItem(dateKeyNote,notes.value);
+      else
+        localStorage.setItem(dateKeyNote,notes.value);
+    }
+
+  })
+}
+legendTrack();
+
 function moodTrack(){
-  var div = document.querySelector(".dates").querySelectorAll("div");
+  var div = dates.querySelectorAll("div");
   var i;
   for(i=0;i<42;i++)
   {
-    div[i].addEventListener("click", e=>{
-      var j;
-      for( j=0 ; j<7 ; j++){
-        if (e.target.style.backgroundColor == colors[j])
-          break
+    div[i].addEventListener("mouseover",e=>{
+      var dateKeyNote = e.target.textContent+monthIndex+year+"n";
+      if(localStorage.getItem(dateKeyNote)!=null){
+        notes.style.display = "block";
+        notes.value = localStorage.getItem(dateKeyNote);
       }
-      if(j==6)
-        j=-1;
-      var dateDiv = e.target;
-      dateDiv.style.backgroundColor = colors[j+1];
-      var dateKey = dateDiv.textContent+monthIndex+year;
-      localStorage.setItem(dateKey,j+1);
-      if(j+1==0)
-        localStorage.removeItem(dateKey);
+    })
+    div[i].addEventListener("mouseleave",e=>{
+      if(save.style.display == "none"){
+        notes.style.display = "none";
+      }
+    })
+    div[i].addEventListener("click", e=>{
+      if(sessionStorage.getItem("lastClicked")!=null){
+        var lastId = sessionStorage.getItem("lastClicked")
+        var oldDiv = document.getElementById(lastId.toString());
+        var dateKeyNote = oldDiv.textContent+monthIndex+year+"n";
+        oldDiv.style.opacity = null;
+        sessionStorage.removeItem("lastClicked");
+        save.style.display = "none";
+        error.style.display = "none";
+        legend.style.cursor = null;
+        
+        notes.style.display = "none";
+        if (notes.value != defaultNote){
+          if(notes.value == "")
+            localStorage.removeItem(dateKeyNote,notes.value);
+          else
+            localStorage.setItem(dateKeyNote,notes.value);
+        }
+      }
+      if(e.target.id != "" && e.target.id != lastId){
+        sessionStorage.setItem("lastClicked",e.target.id);
+        e.target.style.opacity = 0.65;
+        save.style.display = "block";
+        //save.innerHTML = "Cancel";
+        legend.style.cursor = "pointer";
+        notes.style.display = "block";
+
+        var dateKeyNote = e.target.textContent+monthIndex+year+"n";
+        if(localStorage.getItem(dateKeyNote)==null)
+          notes.value= defaultNote;
+        else
+          notes.value = localStorage.getItem(dateKeyNote);
+      }
     })
     div[i].addEventListener('contextmenu', e=>{
       e.preventDefault();
-      var j;
-      for( j=0 ; j<7 ; j++){
-        if (e.target.style.backgroundColor == colors[j])
-          break
-      }
-      if(j==0)
-        j=7;
-      var dateDiv = e.target;
-      dateDiv.style.backgroundColor = colors[j-1];
-      var dateKey = dateDiv.textContent+monthIndex+year;
-      localStorage.setItem(dateKey,j-1);
-      if(j-1==0)
+      var div = e.target;
+      var dateKey = div.textContent+monthIndex+year;
+      var dateStatus = localStorage.getItem(dateKey);
+      if(dateStatus!=null)
+      {
+        div.classList.remove(dateStatus);
         localStorage.removeItem(dateKey);
+        
+      }
+      div.classList.add("default");
+      localStorage.removeItem(dateKeyNote,notes.value);
     })
-}
+  }
 }
 moodTrack();
 
-/*
-add event to dates div 
-the event will cause the .notes to open on hover
-the event will also cause the value of .notes to be 
-scrap this */
-
-/*IMPORTANT
-change left click on div dates -> reveals a clickable legend and a textarea
-  make a function that gives event listeners to the legend
-  this function should use the div date in question as parameter
-change right cick on div dates -> sets the background color to default color
-*/
-
-/*
-function notes(){
-  var div = document.querySelector(".dates").querySelectorAll("div");
-  var notes = document.querySelector(".notes");
-  var i;
-  for(i=0;i<42;i++)
-  {
-    div[i].addEventListener("mouseover", e=>{
-    })
-    div[i].addEventListener("mouseleave", e=>{
-    })
-}
-}
-notes();
-*/
 
 const headerArrows = header.querySelectorAll("span");
 headerArrows[0].addEventListener("click", e=>{
-  if (monthIndex > 0)
-    monthIndex = monthIndex -1;
-  else
-  {
-    year -= 1;
-    monthIndex = 11
-    headerYear.textContent = year;
+  if(save.style.display == "none"){
+    if (monthIndex > 0)
+      monthIndex = monthIndex -1;
+    else
+    {
+      year -= 1;
+      monthIndex = 11
+      headerYear.textContent = year;
+    }
+    headerMonth.textContent = months[monthIndex];
+    dates.innerHTML = "";
+    greyDatesFront(monthIndex,year);
+    currentDatesMiddle(monthIndex,year);
+    greyDatesBack(monthIndex,year);
+    moodTrack();
   }
-  headerMonth.textContent = months[monthIndex];
-  var dates = document.querySelector(".dates");
-  dates.innerHTML = "";
-  greyDatesFront(monthIndex,year);
-  currentDatesMiddle(monthIndex,year);
-  greyDatesBack(monthIndex,year);
-  moodTrack();
+  else{
+    error.style.display = "block";
+  }
 })
 
 headerArrows[1].addEventListener("click", e=>{
-  if (monthIndex < 11)
-    monthIndex = monthIndex +1;
-  else
-  {
-    year += 1;
-    monthIndex = 0
-    headerYear.textContent = year;
+  if(save.style.display == "none"){
+    if (monthIndex < 11)
+      monthIndex = monthIndex +1;
+    else
+    {
+      year += 1;
+      monthIndex = 0
+      headerYear.textContent = year;
+    }
+    headerMonth.textContent = months[monthIndex];
+    dates.innerHTML = "";
+    greyDatesFront(monthIndex,year);
+    currentDatesMiddle(monthIndex,year);
+    greyDatesBack(monthIndex,year);
+    moodTrack();
   }
-  headerMonth.textContent = months[monthIndex];
-  var dates = document.querySelector(".dates");
-  dates.innerHTML = "";
-  greyDatesFront(monthIndex,year);
-  currentDatesMiddle(monthIndex,year);
-  greyDatesBack(monthIndex,year);
-  moodTrack();
+  else{
+    error.style.display = "block";
+  }
 })
 
