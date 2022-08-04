@@ -156,7 +156,7 @@ function moodTrack(){
   {
     div[i].addEventListener("mouseover",e=>{
       var dateKeyNote = e.target.textContent+monthIndex+year+"n";
-      if(localStorage.getItem(dateKeyNote)!=null){
+      if(localStorage.getItem(dateKeyNote)!=null && e.target.style.color != "grey"){
         notes.style.display = "block";
         notes.value = localStorage.getItem(dateKeyNote);
       }
