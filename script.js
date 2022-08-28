@@ -125,6 +125,7 @@ function legendTrack(){
         div.classList.add(currStatus);
         localStorage.setItem(dateKey,currStatus);
         save.innerHTML = "Save";
+        //set session storage last clicked to null?
       }
     })
   }
@@ -156,8 +157,8 @@ function moodTrack(){
   {
     div[i].addEventListener("mouseover",e=>{
       var dateKeyNote = e.target.textContent+monthIndex+year+"n";
-      if(localStorage.getItem(dateKeyNote)!=null && e.target.style.color != "grey"){
-        notes.style.display = "block";
+      if(localStorage.getItem(dateKeyNote)!=null && e.target.style.color != "grey" && sessionStorage.getItem("lastClicked")==null){ //if there is a saved note for the date, and the date is valid, and you are not editing anything rn,
+        notes.style.display = "block";                                                                                              //Show the saved note for that date
         notes.value = localStorage.getItem(dateKeyNote);
       }
     })
@@ -167,26 +168,25 @@ function moodTrack(){
       }
     })
     div[i].addEventListener("click", e=>{
-      if(sessionStorage.getItem("lastClicked")!=null){
+      if(sessionStorage.getItem("lastClicked")!=null){              //if you click on another date while editing one date.
         var lastId = sessionStorage.getItem("lastClicked")
         var oldDiv = document.getElementById(lastId.toString());
         var dateKeyNote = oldDiv.textContent+monthIndex+year+"n";
-        oldDiv.style.opacity = null;
-        sessionStorage.removeItem("lastClicked");
+        oldDiv.style.opacity = null;                                //The last div opaque again
+        sessionStorage.removeItem("lastClicked");                   //Remove it from lastclicked
         save.style.display = "none";
         error.style.display = "none";
         legend.style.cursor = null;
-        
         notes.style.display = "none";
-        if (notes.value != defaultNote){
-          if(notes.value == "")
-            localStorage.removeItem(dateKeyNote,notes.value);
-          else
-            localStorage.setItem(dateKeyNote,notes.value);
+        if (notes.value != defaultNote){                            // If the note has been changed
+          if(notes.value == "")                                     // to "", remove it from storage
+            localStorage.removeItem(dateKeyNote,notes.value);   
+          else                                                      // to something else, re-save the note
+            localStorage.setItem(dateKeyNote,notes.value);  
         }
       }
-      if(e.target.id != "" && e.target.id != lastId){
-        sessionStorage.setItem("lastClicked",e.target.id);
+      if(e.target.id != "" && e.target.id != lastId){               //If you click on the valid black dates of the month,
+        sessionStorage.setItem("lastClicked",e.target.id);          //set last clicked to id of div
         e.target.style.opacity = 0.65;
         save.style.display = "block";
         //save.innerHTML = "Cancel";
@@ -198,6 +198,7 @@ function moodTrack(){
           notes.value= defaultNote;
         else
           notes.value = localStorage.getItem(dateKeyNote);
+                                                                    // Make it so that you have something in session storage that saves wether you are currently editing something or not
       }
     })
     div[i].addEventListener('contextmenu', e=>{
