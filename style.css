@@ -64,7 +64,7 @@ body{
     width: calc(100%/7);
     height:100%;
     text-align: center;
-    line-height: calc(2);
+    line-height: 100%;
 }
 
 .dates{
@@ -80,7 +80,7 @@ body{
     width: calc(100%/7);
     height: calc(100%/6);
     text-align: center;
-    line-height: calc(43.2rem/6);
+    line-height:  calc(43.2rem/6);
     transition: background-color 0.2s, opacity 0.2s ease-in-out;
 }
 
@@ -88,10 +88,7 @@ body{
     background-color: var(--shallow-taupe);
 }
 
-.dates div:hover{
-    opacity: 0.7;
-    cursor: pointer;
-}
+
 
 .dates div:hover .notes{
     background-color: black;
@@ -102,12 +99,13 @@ body{
     width: 4.75rem;   
     margin-left: 3rem; 
     text-align: center;
-    box-shadow: 0.5rem 0.5rem 0.5rem #98b4b4;
+    
 }
 
 .legend div{
     width: 100%;
     line-height: 2rem;
+    box-shadow: 0.5rem 0.5rem 0.5rem #98b4b4;
 }
 
 .great{
@@ -158,7 +156,7 @@ body{
 
 .notes{
     margin-left: 3rem;
-    height: 20vh;
+    height: 30vh;
     width: 20vw;
     background-color: var(--straw);
     font-size: 100%;
@@ -168,6 +166,7 @@ body{
     box-shadow: 0.5rem 0.5rem 0.5rem #98b4b4;
     display: none;
     position:absolute;
+    top: 35vh;
     right: 1vw;
 }
 
@@ -184,4 +183,56 @@ body{
     width: 20rem;
     background-color: red;
     border-radius: 100%;
+}
+
+@media (max-width: 480px) {
+    body{
+        font-size: 100%;
+    }
+    .body{
+        padding:1rem;
+    }
+    .container{
+        height: 80vh;
+        width: 90vw;
+    }
+    .header{
+        height: 20%;
+        font-size: 100%;
+    }
+    .days{
+        height:3.5%;
+        z-index: 1;
+    }
+    .dates{
+        height: 76.5%;
+    }
+    .dates div{
+        line-height:  calc(61.2vh/6);
+    }
+    .notes{
+        top: 80vh;
+        width: 98vw;
+        height: 18vh;
+    }
+    .legend{
+        position:absolute;
+        top:93vh;
+        height:2rem;
+        width: 98vw;
+        margin-left: 0;
+        display: flex;
+        z-index: 1;
+    }
+    .legend div{
+        width: calc(98vw/7);
+        margin: 0;
+    }
+}
+
+@media (min-width: 481px){
+    .dates div:hover{
+        opacity: 0.7;
+        cursor: pointer;
+    }
 }

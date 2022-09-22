@@ -187,7 +187,7 @@ function moodTrack(){
       }
       if(e.target.id != "" && e.target.id != lastId){               //If you click on the valid black dates of the month,
         sessionStorage.setItem("lastClicked",e.target.id);          //set last clicked to id of div
-        e.target.style.opacity = 0.65;
+        e.target.style.opacity = 0.65; 
         save.style.display = "block";
         //save.innerHTML = "Cancel";
         legend.style.cursor = "pointer";
@@ -195,7 +195,7 @@ function moodTrack(){
 
         var dateKeyNote = e.target.textContent+monthIndex+year+"n";
         if(localStorage.getItem(dateKeyNote)==null)
-          notes.value= defaultNote;
+          notes.placeholder= defaultNote; //Used to be notes.value = defaultNote
         else
           notes.value = localStorage.getItem(dateKeyNote);
                                                                     // Make it so that you have something in session storage that saves wether you are currently editing something or not
