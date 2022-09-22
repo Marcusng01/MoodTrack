@@ -21,6 +21,9 @@
 
 body{
     background-color: var(--powder-blue);
+}
+
+.body{
     display:flex;
     align-items: center;
     justify-content: center;
