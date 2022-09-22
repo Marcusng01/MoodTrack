@@ -161,6 +161,9 @@ function moodTrack(){
         notes.style.display = "block";                                                                                              //Show the saved note for that date
         notes.value = localStorage.getItem(dateKeyNote);
       }
+      else{
+        notes.value = none; //Erases contents of note if mouse hovers over date without a note
+      }
     })
     div[i].addEventListener("mouseleave",e=>{
       if(save.style.display == "none"){
