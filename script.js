@@ -161,9 +161,7 @@ function moodTrack(){
         notes.style.display = "block";                                                                                              //Show the saved note for that date
         notes.value = localStorage.getItem(dateKeyNote);
       }
-      else{
-        notes.value = none; //Erases contents of note if mouse hovers over date without a note
-      }
+
     })
     div[i].addEventListener("mouseleave",e=>{
       if(save.style.display == "none"){
@@ -198,7 +196,10 @@ function moodTrack(){
 
         var dateKeyNote = e.target.textContent+monthIndex+year+"n";
         if(localStorage.getItem(dateKeyNote)==null)
+        {
           notes.placeholder= defaultNote; //Used to be notes.value = defaultNote
+          notes.value = null;
+        }
         else
           notes.value = localStorage.getItem(dateKeyNote);
                                                                     // Make it so that you have something in session storage that saves wether you are currently editing something or not
