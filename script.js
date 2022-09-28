@@ -104,6 +104,62 @@ function greyDatesBack(month,year){
 }
 greyDatesBack(monthIndex,year);
 
+function countMoodThisMonth(month,year){
+  const tempDate = new Date();
+  tempDate.setMonth(month+1);
+  tempDate.setFullYear(year);
+  tempDate.setDate(0)
+  lastDate = tempDate.getDate(); //last date of the month
+  const halfKey = month.toString() + year;
+
+  //Tally mood for this month
+  var moodTally = {
+    great:0,
+    good:0,
+    average:0,
+    bad:0,
+    awful:0,
+    forgor:0,
+  };
+  for(i = 1 ; i <= lastDate; i++){
+    var dateKey = i+halfKey;
+    var mood = localStorage.getItem(dateKey);
+    if (mood != null){
+      moodTally[mood] = moodTally[mood] + 1;
+    }
+  }
+
+  //Sets the pie chart segments
+  var pie = document.querySelector(".pie")
+
+  var segmentStore = [];
+  segmentStore[0] = moodTally.great / lastDate * 100;
+  segmentStore[1] = moodTally.good / lastDate * 100 + segmentStore[0];
+  segmentStore[2]= moodTally.average / lastDate * 100 + segmentStore[1];
+  segmentStore[3] = moodTally.bad / lastDate * 100 + segmentStore[2];
+  segmentStore[4] = moodTally.awful / lastDate * 100 + segmentStore[3];
+  segmentStore[5] = moodTally.forgor / lastDate * 100 + segmentStore[4];
+  segmentStore[6] = 100;
+
+  pie.style.backgroundImage= 
+  "conic-gradient(" +
+  "var(--great) 0%," +
+  "var(--great)" + segmentStore[0] + "%," +
+  "var(--good)," + segmentStore[0] + "%," +
+  "var(--good)," + segmentStore[1] + "%," +
+  "var(--average)," + segmentStore[1] + "%," +
+  "var(--average)," + segmentStore[2] + "%," +
+  "var(--bad)," + segmentStore[2] + "%," +
+  "var(--bad)," + segmentStore[3] + "%," +
+  "var(--awful)," + segmentStore[3] + "%," +
+  "var(--awful)," + segmentStore[4] + "%," +
+  "var(--forgor)" + segmentStore[4] + "%," +
+  "var(--forgor)" + segmentStore[5] + "%," +
+  "var(--shallow-taupe)" + segmentStore[5] + "%" +
+  ")";
+}
+countMoodThisMonth(monthIndex,year);
+
 function legendTrack(){
   var i;
   var legendDiv = legend.querySelectorAll("div");
@@ -111,22 +167,23 @@ function legendTrack(){
   for(i=0;i<6;i++){
     legendDiv[i].addEventListener("click", e=>{
       var lastDiv = sessionStorage.getItem("lastClicked");
-      if(sessionStorage.getItem("lastClicked") != null ){
+      if(lastDiv != null){
+        var dateKey = lastDiv + monthIndex + year;
         var div = document.getElementById(lastDiv.toString());
-        div.style.backgroundColor = null;
-        var dateKey = div.textContent+monthIndex+year;
-        var currStatus = e.target.textContent.toLowerCase();
-        var dateStatus = localStorage.getItem(dateKey);
-        if(dateStatus!=null)
+        var currMood = e.target.textContent.toLowerCase();
+        var prevMood = localStorage.getItem(dateKey);
+        if(prevMood!=null)
         {
-          div.classList.remove(dateStatus);
+          div.classList.remove(prevMood);
           localStorage.removeItem(dateKey);
         }
-        div.classList.add(currStatus);
-        localStorage.setItem(dateKey,currStatus);
-        save.innerHTML = "Save";
+        div.classList.add(currMood);
+        localStorage.setItem(dateKey,currMood);
+        
         //set session storage last clicked to null?
+        
       }
+      countMoodThisMonth(monthIndex,year);
     })
   }
   legendDiv[i].addEventListener("click",e=>{
@@ -136,7 +193,6 @@ function legendTrack(){
     save.style.display ="none";
     error.style.display = "none";
     legend.style.cursor = null;
-
     notes.style.display = "none";
     var dateKeyNote = div.textContent+monthIndex+year+"n";
     if (notes.value != defaultNote){
@@ -145,7 +201,7 @@ function legendTrack(){
       else
         localStorage.setItem(dateKeyNote,notes.value);
     }
-
+    countMoodThisMonth(monthIndex,year);
   })
 }
 legendTrack();
@@ -202,22 +258,23 @@ function moodTrack(){
         }
         else
           notes.value = localStorage.getItem(dateKeyNote);
-                                                                    // Make it so that you have something in session storage that saves wether you are currently editing something or not
+          // Make it so that you have something in session storage that saves wether you are currently editing something or not
       }
     })
     div[i].addEventListener('contextmenu', e=>{
       e.preventDefault();
       var div = e.target;
       var dateKey = div.textContent+monthIndex+year;
-      var dateStatus = localStorage.getItem(dateKey);
-      if(dateStatus!=null)
+      var dateMood = localStorage.getItem(dateKey);
+      if(dateMood!=null)
       {
-        div.classList.remove(dateStatus);
+        div.classList.remove(dateMood);
         localStorage.removeItem(dateKey);
-        
-      }
+      } 
       div.classList.add("default");
-      localStorage.removeItem(dateKeyNote,notes.value);
+      //localStorage.removeItem(dateKey + "n",notes.value);
+      //Add this line back if you want to delete notes upon rightclick
+      countMoodThisMonth(monthIndex,year);
     })
   }
 }
@@ -225,7 +282,7 @@ moodTrack();
 
 
 const headerArrows = header.querySelectorAll("span");
-headerArrows[0].addEventListener("click", e=>{
+headerArrows[0].addEventListener("click", e=>{                            
   if(save.style.display == "none"){
     if (monthIndex > 0)
       monthIndex = monthIndex -1;
@@ -241,6 +298,7 @@ headerArrows[0].addEventListener("click", e=>{
     currentDatesMiddle(monthIndex,year);
     greyDatesBack(monthIndex,year);
     moodTrack();
+    countMoodThisMonth(monthIndex,year)
   }
   else{
     error.style.display = "block";
@@ -263,6 +321,7 @@ headerArrows[1].addEventListener("click", e=>{
     currentDatesMiddle(monthIndex,year);
     greyDatesBack(monthIndex,year);
     moodTrack();
+    countMoodThisMonth(monthIndex,year)
   }
   else{
     error.style.display = "block";

@@ -173,18 +173,23 @@ body{
     right: 1vw;
 }
 
-.graph{
-    margin-right: 5rem;
-    height: 40rem;
-    width: 30rem;
-    background-color: pink;
-    display: none;
+.graph-container{
+    height: 15vw;
+    width: 15vw;
+    background-color: var(--light-coral);
+    display: flex;
+    position: absolute;
+    bottom:5vh;
+    left:1vw;
+    top: 1vw;
+    align-items: center;
+    justify-content: center;
 }
 
 .pie{
-    height: 20rem;
-    width: 20rem;
-    background-color: red;
+    height: 10vw;
+    width: 10vw;
+    background-color: var(--shallow-taupe);
     border-radius: 100%;
 }
 
@@ -230,6 +235,12 @@ body{
     .legend div{
         width: calc(98vw/7);
         margin: 0;
+    }
+}
+
+@media (max-width: 1400px) and (min-width: 481px) {
+    .notes{
+        top: 3vh;
     }
 }
 
