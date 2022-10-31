@@ -28,6 +28,7 @@ const defaultNote = "Write Something Here"
 
 function greyDatesFront(month,year){
   const tempDate = new Date();
+  tempDate.setDate(1);
   tempDate.setMonth(month);
   tempDate.setFullYear(year);
   tempDate.setDate(1);
@@ -49,6 +50,7 @@ greyDatesFront(monthIndex,year);
 
 function currentDatesMiddle(month,year){
   const tempDate = new Date();
+  tempDate.setDate(1);
   tempDate.setMonth(month);
   tempDate.setFullYear(year);
   if(month != 11){
@@ -77,6 +79,7 @@ currentDatesMiddle(monthIndex,year);
 
 function greyDatesBack(month,year){
   const tempDate = new Date();
+  tempDate.setDate(1);
   tempDate.setMonth(month);
   tempDate.setFullYear(year);
 
@@ -280,7 +283,6 @@ function moodTrack(){
 }
 moodTrack();
 
-
 const headerArrows = header.querySelectorAll("span");
 headerArrows[0].addEventListener("click", e=>{                            
   if(save.style.display == "none"){
@@ -328,3 +330,21 @@ headerArrows[1].addEventListener("click", e=>{
   }
 })
 
+
+//graph
+var graphButton = document.querySelector(".graph-button");
+var graphContainer = document.querySelector(".graph-container");
+
+graphButton.addEventListener("click", e=>{
+  const graphContainerList = graphContainer.classList;
+  graphContainerList.toggle("hide");
+  if (graphButton.textContent == "Graph: On")
+  {
+    graphButton.textContent = "Graph: Off";
+  }
+  else
+  {
+    graphButton.textContent = "Graph: On";
+  }
+    
+})

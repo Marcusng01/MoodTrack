@@ -91,8 +91,6 @@ body{
     background-color: var(--shallow-taupe);
 }
 
-
-
 .dates div:hover .notes{
     background-color: black;
 }
@@ -147,8 +145,8 @@ body{
     display: none;
     box-shadow: 0.5rem 0.5rem 0.5rem #98b4b4;
 }
+
 #error{
-    margin-top: 1rem;
     width: 200%;
     background-color: red;
     color: black;
@@ -184,6 +182,22 @@ body{
     top: 1vw;
     align-items: center;
     justify-content: center;
+}
+.graph-button{
+    position: absolute;
+    width: 4.75rem;
+    padding: 1rem;
+    line-height: 2rem;
+    right:1vw;
+    top: 1vw;
+    cursor:pointer;
+    background-color: var(--light-coral);
+    border-radius: 25%;
+    transition: background-color 0.2s, opacity 0.15s ease-in-out;
+}
+
+.hide{
+    display:none;
 }
 
 .pie{
@@ -233,9 +247,10 @@ body{
         z-index: 1;
     }
     .legend div{
-        width: calc(98vw/7);
+        width: calc(98vw/8);
         margin: 0;
     }
+
 }
 
 @media (max-width: 1400px) and (min-width: 481px) {
@@ -246,6 +261,10 @@ body{
 
 @media (min-width: 481px){
     .dates div:hover{
+        opacity: 0.7;
+        cursor: pointer;
+    }
+    .graph-button:hover{
         opacity: 0.7;
         cursor: pointer;
     }
